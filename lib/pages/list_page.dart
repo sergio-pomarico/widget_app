@@ -12,17 +12,16 @@ class _ListaPageState extends State<ListPage> {
 
   List<int> _numberList = [];
   int _lastItem = 0;
-  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _addTenImages();
+    _initValues();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        fetchData();
+        manageScroll();
       }
     });
   }
@@ -40,7 +39,7 @@ class _ListaPageState extends State<ListPage> {
           title: Text('List pages'),
         ),
         body: Stack(
-          children: <Widget>[_createList(), _createLoading()],
+          children: <Widget>[_createList()],
         ));
   }
 
@@ -67,50 +66,28 @@ class _ListaPageState extends State<ListPage> {
     new Timer(duration, () {
       _numberList.clear();
       _lastItem++;
-      _addTenImages();
+      _initValues();
     });
 
     return Future.delayed(duration);
   }
 
-  void _addTenImages() {
+  void _initValues() {
     for (var i = 1; i < 10; i++) {
       _lastItem++;
       _numberList.add(_lastItem);
     }
-
     setState(() {});
   }
 
-  Future<void> fetchData() async {
-    _isLoading = true;
+  Future<void> manageScroll() async {
     setState(() {});
-    respuestaHTTP();
+    animateScroll();
   }
 
-  void respuestaHTTP() {
-    _isLoading = false;
-
+  void animateScroll() {
     _scrollController.animateTo(_scrollController.position.pixels + 100,
         curve: Curves.fastOutSlowIn, duration: Duration(milliseconds: 250));
-    _addTenImages();
-  }
-
-  Widget _createLoading() {
-    if (_isLoading) {
-      return Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[CircularProgressIndicator()],
-          ),
-          SizedBox(height: 15.0)
-        ],
-      );
-    } else {
-      return SizedBox();
-    }
+    _initValues();
   }
 }
