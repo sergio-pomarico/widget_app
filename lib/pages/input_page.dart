@@ -8,7 +8,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   String _nombre = '';
   String _email = '';
-  String _fecha = '';
+  String _password = '';
 
   String _opcionSeleccionada = 'Volar';
 
@@ -86,7 +86,7 @@ class _InputPageState extends State<InputPage> {
   }
 
   List<DropdownMenuItem<String>> getOpcionesDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
+    List<DropdownMenuItem<String>> lista = [];
 
     _poderes.forEach((poder) {
       lista.add(DropdownMenuItem(

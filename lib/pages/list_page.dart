@@ -16,7 +16,7 @@ class _ListaPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
-    _initValues();
+    _addItem();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -66,13 +66,13 @@ class _ListaPageState extends State<ListPage> {
     new Timer(duration, () {
       _numberList.clear();
       _lastItem++;
-      _initValues();
+      _addItem();
     });
 
     return Future.delayed(duration);
   }
 
-  void _initValues() {
+  void _addItem() {
     for (var i = 1; i < 10; i++) {
       _lastItem++;
       _numberList.add(_lastItem);
@@ -88,6 +88,6 @@ class _ListaPageState extends State<ListPage> {
   void animateScroll() {
     _scrollController.animateTo(_scrollController.position.pixels + 100,
         curve: Curves.fastOutSlowIn, duration: Duration(milliseconds: 250));
-    _initValues();
+    _addItem();
   }
 }
